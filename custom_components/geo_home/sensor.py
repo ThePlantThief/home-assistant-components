@@ -133,7 +133,7 @@ class GeoHomeElectricitySensor(CoordinatorEntity, SensorEntity):
     @property
     def name(self):
         """Return the name of the sensor."""
-        return "Electriciy"
+        return "Electricity"
 
     @property
     def unique_id(self):

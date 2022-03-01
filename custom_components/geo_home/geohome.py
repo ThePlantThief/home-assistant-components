@@ -59,6 +59,7 @@ class GeoHomeHub:
             else:
                 return False
         else:
+            _LOGGER.warning("GeoHome Auth API returned : " + str(response.status_code))
             return False
 
     async def authenticate(self) -> bool:
@@ -70,12 +71,15 @@ class GeoHomeHub:
     def get_device_details(self):
         response = requests.get(
             BASE_URL + DEVICE_DETAUILS_URL,
-            headers={"Authorization": "Bearer " + self.accessToken},
+            headers={"Authorization": "Bearer " + str(self.accessToken)},
         )
         if response.status_code == 200:
             response_json = response.json()
             system_roles = response_json.get("systemRoles")
             self.deviceId = system_roles[0]["systemId"]
+        else:
+            _LOGGER.warning("GeoHome Device Details API returned " + str(response.status_code))
+
 
     def async_get_device_data(self):
         if self.accessToken == None:
@@ -84,8 +88,8 @@ class GeoHomeHub:
             self.get_device_details()
 
         response = requests.get(
-            BASE_URL + LIVE_DATA_URL + self.deviceId,
-            headers={"Authorization": "Bearer " + self.accessToken},
+            BASE_URL + LIVE_DATA_URL + str(self.deviceId),
+            headers={"Authorization": "Bearer " + str(self.accessToken)},
         )
 
         if response.status_code == 200:
@@ -101,8 +105,8 @@ class GeoHomeHub:
                         self.gasPower = powerItem["watts"]
 
             response = requests.get(
-                BASE_URL + PERIODIC_DATA_URL + self.deviceId,
-                headers={"Authorization": "Bearer " + self.accessToken},
+                BASE_URL + PERIODIC_DATA_URL + str(self.deviceId),
+                headers={"Authorization": "Bearer " + str(self.accessToken)},
             )
             if response.status_code == 200:
                 response_json = response.json()
