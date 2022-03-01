@@ -1,5 +1,5 @@
 {
-    "name": "Geo",
+    "name": "GeoHome",
     "hacs": "0.24.0",
     "domains": [
         "binary_sensor",
@@ -9,6 +9,6 @@
         "fan",
         "light"
     ],
-    "iot_class": "Local Push",
+    "iot_class": "Cloud Polling",
     "homeassistant": "0.115.0"
 }
